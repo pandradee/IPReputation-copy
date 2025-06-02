@@ -1,0 +1,46 @@
+{
+	"manifest_version": 2.0,
+	"id": "iprep",
+	"type": "module",
+	"name": "Monitor de Reputação de IPs",
+	"namespace": "IPReputation",
+	"version": "1.0",
+	"author": "Zabbix Community",
+	"url": "https://github.com/zabbix/community-modules",
+	"description": "Módulo para monitorar a reputação de IPs da organização em diversas blacklists e serviços de reputação online.",
+	"actions": {
+		"module.iprep.list": {
+			"class": "IPRepList",
+			"view": "iprep.list",
+			"layout": "layout.htmlpage"
+		},
+		"iprep.form.edit": {
+			"class": "IPRepForm",
+			"view": "iprep.form",
+			"layout": "layout.json"
+		},
+		"iprep.form.submit": {
+			"class": "IPRepFormSubmit",
+			"layout": "layout.json"
+		},
+		"iprep.form.enable": {
+			"class": "IPRepFormStatus",
+			"layout": "layout.json"
+		},
+		"iprep.form.disable": {
+			"class": "IPRepFormStatus",
+			"layout": "layout.json"
+		},
+		"iprep.form.delete": {
+			"class": "IPRepFormDelete",
+			"layout": "layout.json"
+		}
+	},
+	"storage": {
+		"class": "ConfigStorage"
+	},
+	"assets": {
+		"js": ["iprep.js", "iprep.form.js"],
+		"css": ["iprep.css", "iprep.form.css"]
+	}
+}

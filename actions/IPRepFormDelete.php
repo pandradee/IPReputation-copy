@@ -20,7 +20,7 @@ namespace Modules\IPReputation\Actions;
 use Exception;
 use CControllerResponseData;
 
-class IPReputationFormDelete extends BaseAction
+class IPRepFormDelete extends BaseAction
 {
     public function init()
     {

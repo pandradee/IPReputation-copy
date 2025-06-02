@@ -21,7 +21,7 @@ use CCsrfTokenHelper;
 use CControllerResponseData;
 use Modules\IPReputation\Service\IPData;
 
-class IPReputationForm extends BaseAction
+class IPRepForm extends BaseAction
 {
     public function init()
     {

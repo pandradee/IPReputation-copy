@@ -25,7 +25,7 @@ use CPagerHelper;
 use CControllerResponseData;
 use Modules\IPReputation\Service\IPData;
 
-class IPReputationList extends BaseAction
+class IPRepList extends BaseAction
 {
     protected function checkInput()
     {

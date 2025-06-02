@@ -21,7 +21,7 @@ use Exception;
 use CControllerResponseData;
 use Modules\IPReputation\Service\IPData;
 
-class IPReputationFormSubmit extends BaseAction
+class IPRepFormSubmit extends BaseAction
 {
     public function init()
     {

@@ -118,7 +118,7 @@ $form->addItem(
 
 (new CHtmlPage())
     ->addItem((new CDiv())->setId('iprep-list-page'))
-    ->setTitle(_('IPData of the Day'))
+    ->setTitle(_('Monitor de BlackList de Domínios'))
     ->setControls(
         (new CTag('nav', true,
             (new CList())

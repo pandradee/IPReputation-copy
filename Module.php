@@ -80,21 +80,37 @@ class Module extends CModule
 
     protected function boot()
     {
-        $config = $this->getConfig()['storage']??[];
+        try {
+            $config = $this->getConfig()['storage']??[];
 
-        if ($config) {
+            if ($config) {
+                $class = __NAMESPACE__.'\\Service\\'.$config['class'];
+                $this->storage = new $class($config);
+                $this->storage->begin();
+
+                return;
+            }
+
+            $config = $this->getManifest()['storage'];
             $class = __NAMESPACE__.'\\Service\\'.$config['class'];
             $this->storage = new $class($config);
-            $this->storage->begin();
-
-            return;
+            $config += $this->storage->setup();
+            $this->setConfig(['storage' => $config]);
+        } catch (\Exception $e) {
+            // Log do erro para um arquivo
+            $log_file = __DIR__ . '/var/error_log.txt';
+            $log_message = date('Y-m-d H:i:s') . ' - Error in boot: ' . $e->getMessage() . "\n";
+            
+            // Garantir que o diretório var existe
+            if (!is_dir(__DIR__ . '/var')) {
+                mkdir(__DIR__ . '/var', 0777, true);
+            }
+            
+            file_put_contents($log_file, $log_message, FILE_APPEND);
+            
+            // Inicializar um armazenamento vazio em memória
+            $this->storage = new Service\ConfigStorage(['data' => []]);
         }
-
-        $config = $this->getManifest()['storage'];
-        $class = __NAMESPACE__.'\\Service\\'.$config['class'];
-        $this->storage = new $class($config);
-        $config += $this->storage->setup();
-        $this->setConfig(['storage' => $config]);
     }
 
     protected function registerMenuEntry()

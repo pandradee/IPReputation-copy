@@ -30,6 +30,14 @@ abstract class StorageAbstract
     public abstract function delete(array $messages): array;
 
     /**
+     * Define um item no armazenamento
+     * 
+     * @param array $data Dados a serem armazenados
+     * @return array Dados armazenados
+     */
+    public abstract function set(array $data): array;
+
+    /**
      * Method to initialize storage, is called by storage class contructor before setting $dirty flag.
      *
      * @throws Exception when initialization failed.

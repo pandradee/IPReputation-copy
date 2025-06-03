@@ -19,6 +19,10 @@
 			"view": "iprep.domain",
 			"layout": "layout.htmlpage"
 		},
+		"module.iprep.error": {
+			"view": "error",
+			"layout": "layout.htmlpage"
+		},
 		"iprep.form.edit": {
 			"class": "IPRepForm",
 			"view": "iprep.form",

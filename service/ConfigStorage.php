@@ -139,4 +139,28 @@ class ConfigStorage extends FileStorage
         
         return $this->messages[$data['id']];
     }
+
+    /**
+     * Cria novos itens no armazenamento
+     * 
+     * @param array $messages Itens a serem criados
+     * @return array Itens criados
+     */
+    public function create(array $messages): array
+    {
+        $created = [];
+        
+        foreach ($messages as $message) {
+            if (!isset($message['id'])) {
+                $message['id'] = uniqid();
+            }
+            
+            $this->messages[$message['id']] = $message;
+            $created[] = $message;
+        }
+        
+        $this->dirty = true;
+        
+        return $created;
+    }
 }

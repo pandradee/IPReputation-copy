@@ -103,7 +103,7 @@ class Module extends CModule
             return;
         }
 
-        $menuItem = new CMenuItem(_('Monitor de Reputação de IPs'));
+        $menuItem = new CMenuItem(_('Monitor de BlackList de Domínios'));
         $menuItem->setAction('module.iprep.list');
 
         APP::Component()

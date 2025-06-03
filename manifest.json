@@ -2,10 +2,10 @@
 	"manifest_version": 2.0,
 	"id": "iprep",
 	"type": "module",
-	"name": "Monitor de Reputação de IPs",
+	"name": "Monitor de BlackList de Domínios",
 	"namespace": "IPReputation",
 	"version": "1.0",
-	"author": "Zabbix Community",
+	"author": "Pedro Santiago",
 	"url": "https://github.com/zabbix/community-modules",
 	"description": "Módulo para monitorar a reputação de IPs da organização em diversas blacklists e serviços de reputação online.",
 	"actions": {

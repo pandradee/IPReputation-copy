@@ -14,6 +14,11 @@
 			"view": "iprep.list",
 			"layout": "layout.htmlpage"
 		},
+		"module.iprep.domain": {
+			"class": "DomainDashboard",
+			"view": "iprep.domain",
+			"layout": "layout.htmlpage"
+		},
 		"iprep.form.edit": {
 			"class": "IPRepForm",
 			"view": "iprep.form",
@@ -34,13 +39,30 @@
 		"iprep.form.delete": {
 			"class": "IPRepFormDelete",
 			"layout": "layout.json"
+		},
+		"domain.form.edit": {
+			"class": "DomainForm",
+			"view": "domain.form",
+			"layout": "layout.json"
+		},
+		"domain.form.submit": {
+			"class": "DomainFormSubmit",
+			"layout": "layout.json"
+		},
+		"domain.form.delete": {
+			"class": "DomainFormDelete",
+			"layout": "layout.json"
+		},
+		"domain.check": {
+			"class": "DomainCheck",
+			"layout": "layout.json"
 		}
 	},
 	"storage": {
 		"class": "ConfigStorage"
 	},
 	"assets": {
-		"js": ["iprep.js", "iprep.form.js"],
-		"css": ["iprep.css", "iprep.form.css"]
+		"js": ["iprep.js", "iprep.form.js", "domain.js", "domain.form.js"],
+		"css": ["iprep.css", "iprep.form.css", "domain.css"]
 	}
 }

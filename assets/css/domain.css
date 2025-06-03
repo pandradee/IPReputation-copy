@@ -1,0 +1,120 @@
+/**
+ * Copyright (C) 2025 Monzphere - Fork mantido por Monzphere
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of
+ * the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+ * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * See the GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License along with this program.
+ * If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/* Estilos para o monitor de blacklist de domínios */
+
+/* Estilo para o formulário de domínio */
+.domain-config-form {
+    padding: 10px;
+}
+
+.domain-config-form .monzphere-logo {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+/* Indicadores de risco */
+.domain-risk-indicator {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.domain-risk-high {
+    background-color: #ff5c5c;
+    color: #fff;
+}
+
+.domain-risk-medium {
+    background-color: #ffae42;
+    color: #000;
+}
+
+.domain-risk-low {
+    background-color: #ffc869;
+    color: #000;
+}
+
+.domain-risk-safe {
+    background-color: #59db8f;
+    color: #000;
+}
+
+/* Estilo para o painel de detalhes */
+.domain-details {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.domain-details-header {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.domain-details-item {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.domain-details-label {
+    flex: 0 0 150px;
+    font-weight: bold;
+}
+
+.domain-details-value {
+    flex: 1;
+}
+
+/* Estilo para a tabela de resultados */
+.domain-results-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.domain-results-table th,
+.domain-results-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.domain-results-table th {
+    background-color: #f8f8f8;
+}
+
+.domain-results-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Botões de ação */
+.domain-action-buttons {
+    display: flex;
+    gap: 5px;
+}
+
+/* Estilo para o botão de verificação de domínio */
+.js-check-domain {
+    cursor: pointer;
+}
+
+.js-check-domain[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+} 

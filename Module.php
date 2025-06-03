@@ -103,13 +103,20 @@ class Module extends CModule
             return;
         }
 
-        $menuItem = new CMenuItem(_('Monitor de BlackList de Domínios'));
-        $menuItem->setAction('module.iprep.list');
+        // Menu para gerenciar mensagens
+        $msgMenuItem = new CMenuItem(_('Mensagens do Sistema'));
+        $msgMenuItem->setAction('module.iprep.list');
 
+        // Menu para monitorar domínios
+        $domainMenuItem = new CMenuItem(_('Monitor de BlackList de Domínios'));
+        $domainMenuItem->setAction('module.iprep.domain');
+
+        // Adicionar ambos os menus no submenu de Monitoramento
         APP::Component()
             ->get('menu.main')
             ->find(_('Monitoring'))
             ->getSubMenu()
-            ->add($menuItem);
+            ->add($msgMenuItem)
+            ->add($domainMenuItem);
     }
 }

@@ -68,4 +68,75 @@ class ConfigStorage extends FileStorage
     {
         return [];
     }
+
+    /**
+     * Define um item no armazenamento
+     * 
+     * @param array $data Dados a serem armazenados
+     * @return array Dados armazenados
+     */
+    public function set(array $data): array
+    {
+        if (!isset($data['id'])) {
+            throw new Exception('ID is required for storage');
+        }
+        
+        $this->messages[$data['id']] = $data;
+        $this->dirty = true;
+        
+        return $data;
+    }
+
+    /**
+     * Deleta um item do armazenamento
+     * 
+     * @param array $data Dados do item a ser excluído (contém 'id')
+     * @return array Dados do item excluído
+     */
+    public function delete(array $data): array
+    {
+        if (!isset($data['id'])) {
+            throw new Exception('ID is required for deletion');
+        }
+        
+        if (isset($this->messages[$data['id']])) {
+            $deleted = $this->messages[$data['id']];
+            unset($this->messages[$data['id']]);
+            $this->dirty = true;
+            return $deleted;
+        }
+        
+        return $data;
+    }
+
+    /**
+     * Atualiza um item no armazenamento
+     * 
+     * @param array $data Dados a serem atualizados
+     * @return array Dados atualizados
+     */
+    public function update(array $data): array
+    {
+        if (!isset($data['id'])) {
+            throw new Exception('ID is required for update');
+        }
+        
+        if (isset($this->messages[$data['id']])) {
+            if (isset($data['status'])) {
+                $this->messages[$data['id']]['status'] = $data['status'];
+                $this->dirty = true;
+            } elseif (isset($data['type']) && $data['type'] === 'status') {
+                $this->messages[$data['id']]['status'] = $data['status'];
+                $this->dirty = true;
+            } else {
+                $this->messages[$data['id']] = array_merge($this->messages[$data['id']], $data);
+                $this->dirty = true;
+            }
+        } else {
+            // Se não existir, criar novo
+            return $this->set($data);
+        }
+        
+        return $this->messages[$data['id']];
+    }
 }

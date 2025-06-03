@@ -74,12 +74,23 @@ class DomainMonitor
      * 
      * @param string $id ID do domínio a ser verificado
      * @return array Resultado da verificação
+     * @throws Exception Se o domínio não for encontrado
      */
     public function checkDomain(string $id): array
     {
+        // Verificar se o ID é válido
+        if (empty($id)) {
+            throw new Exception('ID de domínio inválido');
+        }
+        
         $data = $this->storage->get(['id' => $id]);
         if (empty($data)) {
             throw new Exception('Domínio não encontrado: ' . $id);
+        }
+        
+        // Verificar se o domínio está definido no registro
+        if (!isset($data['domain']) || empty($data['domain'])) {
+            throw new Exception('Nome de domínio não definido para o ID: ' . $id);
         }
         
         $domain = $data['domain'];

@@ -33,6 +33,25 @@ class FileStorage extends StorageAbstract
 
     public function get(array $options): array
     {
+        // Verificar se estamos buscando um ID específico
+        if (isset($options['id'])) {
+            if (isset($this->messages[$options['id']])) {
+                return $this->messages[$options['id']];
+            }
+            return [];
+        }
+        
+        // Verificar se estamos buscando por tipo
+        if (isset($options['type'])) {
+            $result = [];
+            foreach ($this->messages as $id => $message) {
+                if (isset($message['type']) && $message['type'] === $options['type']) {
+                    $result[$id] = $message;
+                }
+            }
+            return $result;
+        }
+        
         $ts = time();
         $messages = $this->messages;
 
@@ -42,7 +61,7 @@ class FileStorage extends StorageAbstract
 
         if (is_array($options['usrgrpids']??'')) {
             foreach ($messages as $i => $message) {
-                if (!array_intersect($message['usrgrpids'], (array) $options['usrgrpids'])) {
+                if (!array_intersect($message['usrgrpids'] ?? [], (array) $options['usrgrpids'])) {
                     unset($messages[$i]);
                 }
             }
@@ -50,7 +69,7 @@ class FileStorage extends StorageAbstract
 
         if ($options['name']??'' !== '') {
             foreach ($messages as $i => $message) {
-                if (stripos($message['name'], $options['name']) === false) {
+                if (!isset($message['name']) || stripos($message['name'], $options['name']) === false) {
                     unset($messages[$i]);
                 }
             }
@@ -68,9 +87,14 @@ class FileStorage extends StorageAbstract
         $time_till = $options['time_till']??null;
 
         foreach ($messages as $i => &$message) {
-            $show_ts = $message['show_since'] ?: $message['active_since'];
-            $active_ts = $message['active_since'];
-            $end_ts = $message['active_till'];
+            // Pular itens que não são mensagens
+            if (isset($message['type']) && $message['type'] !== 'message') {
+                continue;
+            }
+            
+            $show_ts = $message['show_since'] ?? 0 ?: ($message['active_since'] ?? 0);
+            $active_ts = $message['active_since'] ?? 0;
+            $end_ts = $message['active_till'] ?? 0;
 
             if ($time_from !== null && $time_till !== null && !($time_from < $end_ts && $time_till > $show_ts)) {
                 unset($messages[$i]);
@@ -80,7 +104,7 @@ class FileStorage extends StorageAbstract
 
             $current_time = time();
             
-            if ($message['show_since'] && $message['show_since'] > $current_time) {
+            if (isset($message['show_since']) && $message['show_since'] && $message['show_since'] > $current_time) {
                 unset($messages[$i]);
                 continue;
             }
@@ -99,7 +123,7 @@ class FileStorage extends StorageAbstract
 
         if (is_numeric($options['state']??null) && $options['state'] != -1) {
             foreach ($messages as $i => $message) {
-                if ($options['state'] != $message['state']) {
+                if (!isset($message['state']) || $options['state'] != $message['state']) {
                     unset($messages[$i]);
                 }
             }
@@ -189,5 +213,23 @@ class FileStorage extends StorageAbstract
         $this->commit();
 
         return ['path' => $this->path];
+    }
+
+    /**
+     * Define um item no armazenamento
+     * 
+     * @param array $data Dados a serem armazenados
+     * @return array Dados armazenados
+     */
+    public function set(array $data): array
+    {
+        if (!isset($data['id'])) {
+            throw new Exception('ID is required for storage');
+        }
+        
+        $this->messages[$data['id']] = $data;
+        $this->dirty = true;
+        
+        return $data;
     }
 }

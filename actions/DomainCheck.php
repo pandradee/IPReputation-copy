@@ -44,6 +44,17 @@ class DomainCheck extends BaseAction
         try {
             $id = $this->getInput('id');
             
+            // Verificar se o ID é válido
+            if (empty($id)) {
+                throw new \Exception(_('Invalid domain ID.'));
+            }
+            
+            // Verificar se o domínio existe
+            $domain = $this->module->storage->get(['id' => $id]);
+            if (empty($domain)) {
+                throw new \Exception(_('Domain not found.'));
+            }
+            
             // Criar instância do monitor de domínio
             $monitor = new DomainMonitor($this->module->storage);
             

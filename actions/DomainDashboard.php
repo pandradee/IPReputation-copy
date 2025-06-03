@@ -56,7 +56,7 @@ class DomainDashboard extends BaseAction
         // Obter dados dos domínios
         $domains = $this->module->storage->get([
             'type' => 'domain'
-        ]);
+        ]) ?: [];
         
         // Filtrar domínios se necessário
         if (!empty($filter['domain'])) {

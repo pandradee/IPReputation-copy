@@ -65,9 +65,11 @@ foreach ($data['domains'] as $domain) {
         (new CLink(_('Check'), '#'))
             ->addClass(ZBX_STYLE_BTN_LINK)
             ->addClass('js-check-domain')
+            ->setAttribute('data-id', $domain['id'])
             ->onClick(sprintf($check_event, $domain['id'])),
         (new CLink(_('Edit'), '#'))
             ->addClass(ZBX_STYLE_BTN_LINK)
+            ->setAttribute('data-id', $domain['id'])
             ->onClick(sprintf($event, $domain['id']))
     ];
     

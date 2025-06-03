@@ -117,10 +117,19 @@
         curl.setArgument('action', 'domain.check');
         
         // Mostrar mensagem de carregamento
-        const button = event.target;
-        const original_text = button.textContent;
-        button.textContent = t('Checking...');
-        button.disabled = true;
+        let button = null;
+        if (event && event.target) {
+            button = event.target;
+        } else if (detail.element) {
+            button = detail.element;
+        }
+        
+        let original_text = '';
+        if (button) {
+            original_text = button.textContent;
+            button.textContent = t('Checking...');
+            button.disabled = true;
+        }
         
         jQuery.ajax({
             url: curl.getUrl(),
@@ -135,14 +144,18 @@
                 } else {
                     // Exibir mensagem de erro
                     alert(response.error || t('Error checking domain'));
-                    button.textContent = original_text;
-                    button.disabled = false;
+                    if (button) {
+                        button.textContent = original_text;
+                        button.disabled = false;
+                    }
                 }
             },
             error: function() {
                 alert(t('Error connecting to server'));
-                button.textContent = original_text;
-                button.disabled = false;
+                if (button) {
+                    button.textContent = original_text;
+                    button.disabled = false;
+                }
             }
         });
     }
@@ -156,14 +169,17 @@
         document.addEventListener('domain.check', e => checkDomain(e.detail));
         
         // Adicionar listeners para os botões de verificação de domínio
-        document.querySelectorAll('.js-check-domain').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const id = this.getAttribute('data-id');
-                if (id) {
-                    document.dispatchEvent(new CustomEvent('domain.check', {detail: {id}}));
-                }
-            });
+        jQuery(document).on('click', '.js-check-domain', function(e) {
+            e.preventDefault();
+            const id = jQuery(this).data('id');
+            if (id) {
+                document.dispatchEvent(new CustomEvent('domain.check', {
+                    detail: {
+                        id: id,
+                        element: this
+                    }
+                }));
+            }
         });
     }
 
